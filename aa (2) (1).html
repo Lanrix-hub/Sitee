@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Образовательный портал по социальным наукам</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none" opacity="0.05"><path d="M0,0 L100,0 L100,100 Z" fill="white"/></svg>');
+            background-size: cover;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .nav-link {
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: var(--secondary-color);
+            border-bottom: 3px solid var(--secondary-color);
+            background-color: #f9f9f9;
+        }
+        
+        /* Main Content */
+        main {
+            padding: 3rem 0;
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-align: center;
+        }
+        
+        .section-title i {
+            color: var(--secondary-color);
+        }
+        
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .text-content {
+            font-size: 1.1rem;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .text-content p {
+            margin-bottom: 1.2rem;
+            text-align: center;
+        }
+        
+        /* Новые стили для расширенного контента */
+        .subsection {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--secondary-color);
+            text-align: center;
+        }
+        
+        .subsection-title {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .subsection-title i {
+            color: var(--accent-color);
+        }
+        
+        .theory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .theory-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-top: 3px solid var(--secondary-color);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+        
+        .theory-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .theory-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem auto;
+            border: 2px solid var(--secondary-color);
+            max-width: 900px;
+            text-align: center;
+        }
+        
+.timeline {
+    position: relative;
+    padding: 2rem 0;
+    margin: 2rem auto;
+    max-width: 800px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--secondary-color);
+    z-index: 1;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+    width: calc(50% - 30px); /* Уменьшаем ширину для учета маркера */
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 2;
+}
+
+/* Четные элементы справа */
+.timeline-item:nth-child(even) {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+/* Нечетные элементы слева */
+.timeline-item:nth-child(odd) {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    border: 3px solid white;
+    box-shadow: 0 0 0 3px var(--secondary-color);
+    z-index: 3;
+}
+
+/* Позиционирование маркеров для элементов слева */
+.timeline-item:nth-child(odd)::before {
+    right: -38px; /* Сдвигаем вправо за пределы блока */
+    top: 20px;
+}
+
+/* Позиционирование маркеров для элементов справа */
+.timeline-item:nth-child(even)::before {
+    left: -38px; /* Сдвигаем влево за пределы блока */
+    top: 20px;
+}
+
+.timeline-date {
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+        
+        .sources {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border-radius: 0 8px 8px 0;
+            text-align: center;
+        }
+        
+        .sources h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+        }
+        
+        .sources ul {
+            list-style-type: none;
+            text-align: center;
+        }
+        
+        .sources li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+            text-align: center;
+        }
+        
+        .sources li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+        }
+        
+        .sources a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .sources a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+            
+            .nav-link {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .theory-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline-item {
+                width: 90%;
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item::before {
+                left: 20px;
+            }
+        }
+        
+        ul, ol {
+            text-align: left;
+            display: inline-block;
+            margin-left: 0;
+            padding-left: 1.5rem;
+        }
+        
+        li {
+            text-align: left;
+            margin-bottom: 0.5rem;
+        }
+        
+        .centered-list {
+            text-align: center;
+        }
+        
+        .centered-list ul {
+            display: inline-block;
+            text-align: left;
+        }
+
+        .main-header {
+    background: linear-gradient(135deg, #2c3e50, #3498db);
+    color: #fff;
+    padding: 2.5rem 1rem;
+    text-align: center;
+}
+
+.main-header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.8rem;
+}
+
+.main-header .subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+}
+
+.teacher-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    padding: 1.2rem;
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+.teacher-info p {
+    margin-bottom: 0.4rem;
+    font-size: 1rem;
+}
+
+/* Мобилки */
+@media (max-width: 600px) {
+    .main-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .teacher-card {
+        padding: 1rem;
+    }
+
+    .teacher-info p {
+        font-size: 0.95rem;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+<header class="main-header">
+    <div class="container">
+        <h1>Образовательный портал по социальным наукам</h1>
+        <p class="subtitle">
+            Работа выполнена под руководством преподавателя
+        </p>
+
+        <div class="teacher-card">
+            <div class="teacher-info">
+                <p class="teacher-name">Преподаватель: <strong>Иванов Михаил Алексеевич</strong></p>
+                <p class="teacher-role">Должность: преподаватель обществознания</p>
+                <p class="teacher-org">Образовательное учреждение: it-top college ryazan</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-container">
+            <a href="#society" class="nav-link active" data-target="society">
+                <i class="fas fa-users"></i> Общество и общественное развитие
+            </a>
+            <a href="#economy" class="nav-link" data-target="economy">
+                <i class="fas fa-chart-line"></i> Экономика как основа жизни деятельности
+            </a>
+            <a href="#ethnic" class="nav-link" data-target="ethnic">
+                <i class="fas fa-globe-americas"></i> Этнические общества и нации
+            </a>
+            <a href="#law" class="nav-link" data-target="law">
+                <i class="fas fa-balance-scale"></i> Правовое регулирование взаимодействий
+            </a>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Обновленная секция "Общество и общественное развитие" -->
+        <section id="society" class="section active">
+    <h2 class="section-title"><i class="fas fa-users"></i> Общество и общественное развитие</h2>
+    
+    <div class="content">
+        <div class="text-content">
+            <p><strong>Общество</strong> — это сложная динамическая система, объединяющая людей, которые связаны между собой различными отношениями: экономическими, политическими, социальными, духовными. Общество не является простой суммой индивидов, а представляет собой целостный организм, где каждый элемент выполняет определенные функции и находится во взаимосвязи с другими элементами.</p>
+            
+            <div class="highlight-box">
+                <h4><i class="fas fa-lightbulb"></i> Ключевые характеристики общества:</h4>
+                <div class="centered-list">
+                    <ul>
+                        <li><strong>Системность</strong> — общество состоит из взаимосвязанных элементов и подсистем</li>
+                        <li><strong>Динамичность</strong> — постоянное развитие и изменение</li>
+                        <li><strong>Самоорганизация</strong> — способность к саморегуляции</li>
+                        <li><strong>Интеграция</strong> — объединение индивидов в целостность</li>
+                        <li><strong>Культурное наследие</strong> — передача опыта и знаний между поколениями</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-search"></i> Социологические подходы к определению общества</h3>
+            
+            <div class="subsection">
+                <p>В социологии не раз предпринимались попытки дать окончательное определение общества и выделить его существенные признаки — наиболее типичные, устойчивые и повторяющиеся моменты его жизни.</p>
+                
+                <div class="theory-grid">
+                    <div class="theory-card">
+                        <h4><i class="fas fa-brain"></i> Эмиль Дюркгейм</h4>
+                        <p>Усматривает первооснову устойчивости и единства общества в наличии коллективных представлений и общей воли, препятствующей губительной силе человеческого эгоизма.</p>
+                    </div>
+                    
+                    <div class="theory-card">
+                        <h4><i class="fas fa-balance-scale"></i> Роберт Мертон</h4>
+                        <p>Убеждён, что главным для общества является существование фундаментальных ценностей, благодаря которым каждый индивид ориентирован на соблюдение совместных норм жизнедеятельности.</p>
+                    </div>
+                    
+                    <div class="theory-card">
+                        <h4><i class="fas fa-globe"></i> Нейл Смелзер</h4>
+                        <p>Определяет в качестве отличительных признаков общества наличие географических границ, общей законодательной системы и определённой национальной (социокультурной) идентичности.</p>
+                    </div>
+                    
+                    <div class="theory-card">
+                        <h4><i class="fas fa-gavel"></i> Эдвард Шилз</h4>
+                        <p>Полагает, что основу общества составляет функционирование публичной власти, обеспечивающей контроль над всей территорией и насаждающей общую культуру.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-list-check"></i> Критерии и признаки общества</h3>
+            
+            <div class="subsection">
+                <h4>Критерии общества по Э. Шилзу:</h4>
+                <div class="centered-list">
+                    <ul>
+                        <li>Не является частью более крупной системы</li>
+                        <li>Браки заключаются между представителями данного объединения</li>
+                        <li>Пополняется преимущественно за счёт детей тех людей, которые уже являются его признанными представителями</li>
+                        <li>Имеет территорию, которую считает своей собственной</li>
+                        <li>Обладает собственным названием и собственной историей</li>
+                        <li>Имеет собственную систему управления</li>
+                        <li>Существует дольше средней продолжительности жизни отдельного индивида</li>
+                        <li>Объединяется общей системой ценностей (обычаев, традиций, норм, законов, правил), которую называют культурой</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h4>Отличительные признаки общества в современной социологии:</h4>
+                <div class="centered-list">
+                    <ul>
+                        <li><strong>Наличие социальной общности</strong> — выражает общественную природу жизни людей, социальную специфику их отношений и взаимодействий. Социальная общность возникает на основе органической общности людей и кровнородственных связей, преобразуясь в отношения социально-органического типа.</li>
+                        
+                        <li><strong>Существование в социальном пространстве и времени</strong> — социальные пространство и время отнюдь не всегда совпадают с физическими. Социальное пространство может существовать вне рамок территориальных границ (например, в социальной сети Интернет).</li>
+                        
+                        <li><strong>Наличие социальных институтов</strong> — специальных органов для осуществления саморегуляции и воспроизводства общества. Важнейшим является институт семьи, обусловливающий возникновение и существование прочих институтов.</li>
+                        
+                        <li><strong>Самодеятельность и автономность</strong> — самоорганизация и саморазвитие присущи как обществу в целом, так и отдельным его подсистемам. Однако самодостаточным может быть только общество в целом.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-door-open"></i> Типология обществ: открытые и закрытые</h3>
+            
+            <div class="theory-grid">
+                <div class="theory-card">
+                    <h4><i class="fas fa-lock"></i> Закрытое общество (К. Поппер)</h4>
+                    <div class="centered-list">
+                        <ul>
+                            <li>Статичная социальная структура</li>
+                            <li>Ограниченная социальная мобильность</li>
+                            <li>Неспособность к инновациям</li>
+                            <li>Традиционализм и консерватизм</li>
+                            <li>Догматичная авторитарная идеология</li>
+                            <li>Большинство членов общества принимают навязанные ценности</li>
+                            <li>Тотально идеологизированное общество</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="theory-card">
+                    <h4><i class="fas fa-unlock"></i> Открытое общество (К. Поппер)</h4>
+                    <div class="centered-list">
+                        <ul>
+                            <li>Динамичная социальная структура</li>
+                            <li>Высокая социальная мобильность</li>
+                            <li>Способность к инновациям и изменениям</li>
+                            <li>Критицизм и рациональность</li>
+                            <li>Индивидуализм и плюрализм</li>
+                            <li>Демократическая идеология</li>
+                            <li>Отсутствие государственной идеологии</li>
+                            <li>Свобода выбора мировоззренческих ценностей</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4><i class="fas fa-people-arrows"></i> Функционирование социальной системы</h4>
+                <p>Функционирование и развитие социальной системы обязательно предполагает сменяемость поколений людей и социальное наследование — передачу от поколения к поколению знаний и культуры через процессы образования и социализации. Общество как социальная система организуется изнутри социальной структурой, а извне — окружающей средой.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-cogs"></i> Основные подсистемы общества</h3>
+            
+            <div class="theory-grid">
+                <div class="theory-card">
+                    <h4><i class="fas fa-industry"></i> Экономическая подсистема</h4>
+                    <p>Охватывает производство, распределение, обмен и потребление материальных благ. Включает в себя производительные силы и производственные отношения.</p>
+                </div>
+                
+                <div class="theory-card">
+                    <h4><i class="fas fa-landmark"></i> Политическая подсистема</h4>
+                    <p>Включает государство, политические партии, общественные движения. Обеспечивает управление обществом, поддержание порядка и безопасности.</p>
+                </div>
+                
+                <div class="theory-card">
+                    <h4><i class="fas fa-handshake"></i> Социальная подсистема</h4>
+                    <p>Состоит из социальных групп, общностей, институтов. Определяет социальную структуру и стратификацию общества.</p>
+                </div>
+                
+                <div class="theory-card">
+                    <h4><i class="fas fa-palette"></i> Духовная подсистема</h4>
+                    <p>Включает науку, образование, искусство, религию, мораль. Формирует ценности, идеалы и мировоззрение общества.</p>
+                </div>
+            </div>
+            
+            <h3 class="subsection-title"><i class="fas fa-chart-line"></i> Теории общественного развития</h3>
+            
+            <div class="subsection">
+                <h4>1. Формационная теория (К. Маркс)</h4>
+                <p>Выделяет пять общественно-экономических формаций: первобытнообщинную, рабовладельческую, феодальную, капиталистическую и коммунистическую. Развитие происходит через революционную смену формаций.</p>
+            </div>
+            
+            <div class="subsection">
+                <h4>2. Цивилизационная теория (А. Тойнби, Н. Данилевский)</h4>
+                <p>Рассматривает историю как развитие отдельных цивилизаций, каждая из которых проходит этапы возникновения, роста, надлома и разложения. Выделяет более 20 локальных цивилизаций.</p>
+            </div>
+            
+            <div class="subsection">
+                <h4>3. Теория постиндустриального общества (Д. Белл)</h4>
+                <p>Общество проходит три стадии: доиндустриальную (аграрную), индустриальную и постиндустриальную. В постиндустриальном обществе главную роль играют знания и информация.</p>
+            </div>
+            
+            <div class="subsection">
+                <h4>4. Теория модернизации</h4>
+                <p>Процесс перехода от традиционного общества к современному через индустриализацию, урбанизацию, секуляризацию и развитие демократических институтов.</p>
+            </div>
+            
+            <h3 class="subsection-title"><i class="fas fa-history"></i> Исторические типы обществ</h3>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">До 18 века</div>
+                    <h4>Традиционное (аграрное) общество</h4>
+                    <p>Основано на сельском хозяйстве, ручном труде, сословной иерархии, религиозном мировоззрении. Низкая социальная мобильность.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">18-20 века</div>
+                    <h4>Индустриальное общество</h4>
+                    <p>Доминирование промышленности, машинное производство, урбанизация, классовая структура, массовое образование.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">С конца 20 века</div>
+                    <h4>Постиндустриальное (информационное) общество</h4>
+                    <p>Преобладание сферы услуг, информационные технологии, наукоемкое производство, возрастание роли знаний.</p>
+                </div>
+            </div>
+            
+            <h3 class="subsection-title"><i class="fas fa-bolt"></i> Движущие силы общественного развития</h3>
+            
+            <div class="theory-grid">
+                <div class="theory-card">
+                    <h4><i class="fas fa-tools"></i> Производительные силы</h4>
+                    <p>Развитие техники, технологий и средств производства как материальная основа прогресса.</p>
+                </div>
+                
+                <div class="theory-card">
+                    <h4><i class="fas fa-fist-raised"></i> Социальная борьба</h4>
+                    <p>Конфликты между классами, группами интересов за ресурсы и власть.</p>
+                </div>
+                
+                <div class="theory-card">
+                    <h4><i class="fas fa-flask"></i> Научно-технический прогресс</h4>
+                    <p>Инновации и открытия, кардинально меняющие способы производства и жизнь общества.</p>
+                </div>
+                
+                <div class="theory-card">
+                    <h4><i class="fas fa-brain"></i> Культурные факторы</h4>
+                    <p>Идеи, ценности, мировоззрение, определяющие направление развития.</p>
+                </div>
+            </div>
+            
+            <!-- НОВЫЙ РАЗДЕЛ: Историческое развитие понятия общества -->
+            <h3 class="subsection-title"><i class="fas fa-history"></i> Историческое развитие понятия общества</h3>
+            
+            <div class="subsection">
+                <h4>Античные истоки понятия</h4>
+                <p>Понятие общества имеет глубокие исторические корни. В античную эпоху его прообразами были:</p>
+                <div class="centered-list">
+                    <ul>
+                        <li><strong>Древняя Греция</strong>: ϰοινωνία (общение, объединение людей) и полис (город-государство как гражданская община)</li>
+                        <li><strong>Древний Рим</strong>: societas (общество, компания, товарищество) и civitas (град, гражданская община)</li>
+                    </ul>
+                </div>
+                <p>Латинское societas означало конкретное образование людей, объединившихся для достижения определённой цели (торговля, ремесло и т.д.), и было близко современным понятиям "компания", "товарищество". Уже стоики выдвинули идею всемирного государства (Космополиса) как единого человеческого общества.</p>
+            </div>
+            
+            <div class="subsection">
+                <h4>Средневековье и Новое время</h4>
+                <p>В Средневековье христианские мыслители (Августин и др.) развивали идею единства человеческого рода. Понятие общества носило преимущественно конфессиональный характер и включало сельскую общину, городскую коммуну, цех, корпорацию.</p>
+                <p>В Новое время:</p>
+                <div class="centered-list">
+                    <ul>
+                        <li>Общество стало рассматриваться как система индивидов, связанных силами социального притяжения и отталкивания (под влиянием механики Ньютона)</li>
+                        <li>Сформировалось представление о постоянном законосообразном развитии общества</li>
+                        <li>С конца 18 века общество стали отличать и противопоставлять государству</li>
+                        <li>Сложились концепции гражданского общества (А. Фергюсон, Г. Гегель, К. Маркс)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <h4>Социологические интерпретации XIX-XX веков</h4>
+                <p>В XIX веке "общественное" стало противопоставляться эгоизму отдельных людей и классов. Сформировались основные направления социальной мысли:</p>
+                <div class="theory-grid">
+                    <div class="theory-card">
+                        <h4>Социологический номинализм</h4>
+                        <p>Общество — просто название для суммы индивидов (М. Вебер и др.)</p>
+                    </div>
+                    <div class="theory-card">
+                        <h4>Социологический реализм</h4>
+                        <p>Общество — особая реальность, существующая независимо от индивидов (Э. Дюркгейм и др.)</p>
+                    </div>
+                </div>
+                <p>Ф. Тённис (1887) противопоставил:</p>
+                <div class="centered-list">
+                    <ul>
+                        <li><strong>Gemeinschaft (общность)</strong>: "органическое" целое, основанное на традициях и неформальных связях</li>
+                        <li><strong>Gesellschaft (общество)</strong>: "механическое" образование, основанное на личных интересах и договорных отношениях</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <h4>Типологии обществ в социологии</h4>
+                <p>Различные подходы к классификации обществ:</p>
+                <div class="centered-list">
+                    <ul>
+                        <li><strong>По способу ведения хозяйства</strong>: общества собирателей и охотников, пастушеские, аграрные, индустриальные, постиндустриальные</li>
+                        <li><strong>По способу производства (К. Маркс)</strong>: первобытно-общинная, античная, феодальная, буржуазная, коммунистическая формации</li>
+                        <li><strong>По характеру взаимосвязей</strong>: статусные (основанные на авторитете и власти) и договорные (основанные на свободе и соглашениях)</li>
+                        <li><strong>По степени дифференциации</strong>: первобытные, промежуточные, современные (Т. Парсонс)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <h4>Современные концепции (конец XX - начало XXI вв.)</h4>
+                <p>В ответ на господство холизма и структурного функционализма возникли сомнения в уместности понятия общества, но оно остаётся важнейшим научным понятием, хотя и существенно изменилось:</p>
+                <div class="theory-grid">
+                    <div class="theory-card">
+                        <h4>Постиндустриальное общество</h4>
+                        <p>Д. Белл — общество, где главную роль играют знания и информация</p>
+                    </div>
+                    <div class="theory-card">
+                        <h4>Общество риска</h4>
+                        <p>У. Бек — общество, характеризующееся глобальными рисками</p>
+                    </div>
+                    <div class="theory-card">
+                        <h4>Сетевое общество</h4>
+                        <p>М. Кастельс — общество, основанное на сетевых структурах</p>
+                    </div>
+                    <div class="theory-card">
+                        <h4>Общество "позднего модерна"</h4>
+                        <p>Э. Гидденс — современное общество с новыми формами социальности</p>
+                    </div>
+                </div>
+                <p>Согласно Ш. Эйзенштадту, в современном мире существуют "множественные современности" — модернизированные общества, сохраняющие специфические особенности, связанные с их историческим наследием.</p>
+            </div>
+            <!-- КОНЕЦ НОВОГО РАЗДЕЛА -->
+            
+            <div class="subsection">
+                <h4><i class="fas fa-exclamation-triangle"></i> Современные вызовы и тенденции</h4>
+                <div class="centered-list">
+                    <ul>
+                        <li><strong>Глобализация</strong> — усиление взаимосвязей между обществами во всемирном масштабе</li>
+                        <li><strong>Цифровизация</strong> — проникновение цифровых технологий во все сферы жизни</li>
+                        <li><strong>Экологические проблемы</strong> — изменение климата, истощение ресурсов</li>
+                        <li><strong>Демографические изменения</strong> — старение населения, миграционные процессы</li>
+                        <li><strong>Социальное неравенство</strong> — растущий разрыв между богатыми и бедными</li>
+                        <li><strong>Кризис традиционных институтов</strong> — семьи, государства, религии</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="highlight-box">
+                <h4><i class="fas fa-eye"></i> Перспективы развития общества в 21 веке</h4>
+                <p>Современное общество стоит на пороге Четвертой промышленной революции, характеризующейся конвергенцией технологий (искусственный интеллект, биотехнологии, нанотехнологии). Возникают новые формы социальной организации: сетевое общество, общество знаний, креативное общество. Ключевыми становятся вопросы устойчивого развития, социальной справедливости и сохранения человеческой идентичности в условиях технологических трансформаций.</p>
+            </div>
+            
+            <p>Общественное развитие — это нелинейный процесс, включающий как прогрессивные изменения, так и периоды регресса, кризисов и стагнации. Понимание закономерностей этого процесса позволяет не только объяснить прошлое, но и прогнозировать будущее, вырабатывать стратегии устойчивого развития человечества.</p>
+        </div>
+    </div>
+    
+    <div class="sources">
+        <h3><i class="fas fa-link"></i> Источники и дополнительная литература:</h3>
+        <div class="centered-list">
+            <ul>
+                <li><a href="https://ru.wikipedia.org/wiki/Общество" target="_blank">Википедия: Общество</a></li>
+                <li><a href="https://bigenc.ru/c/obshchestvo-b76624" target="_blank">Большая российская энциклопедия: Общество</a></li>
+                <li><a href="https://cyberleninka.ru/article/n/sotsiologicheskie-issledovaniya" target="_blank">Научные публикации по социологии</a></li>
+                <li><a href="https://documents.un.org/symbol-explorer?s=A/HRC/59/L.13&i=A/HRC/59/L.13_1751460242227" target="_blank">ООН: Социальное развитие</a></li>
+                <li><a href="https://www.jstor.org/stable/43996570?searchText=sociology&searchUri=%2Faction%2FdoBasicSearch%3FQuery%3Dsociology%26so%3Drel&ab_segments=0%2Fspellcheck_basic_search%2Fcontrol&refreqid=fastly-default%3Ac35a122b81bec40b869bf411d228bb41" target="_blank">JSTOR: Социологические исследования</a></li>
+                <li><a href="https://www.britannica.com/topic/society" target="_blank">Британника: Society</a></li>
+                <li><a href="https://www.cambridge.org/core/journals/american-political-science-review" target="_blank">Кембриджские обзоры политической науки</a></li>
+                <li><a href="https://www.sciencedirect.com/topics/social-sciences/social-development" target="_blank">ScienceDirect: Социальное развитие</a></li>
+                <li><a href="https://www.annualreviews.org/journal/soc" target="_blank">Annual Reviews: Социология</a></li>
+                <li><a href="https://unesdoc.unesco.org/ark:/48223/pf0000261595" target="_blank">ЮНЕСКО: Социальные трансформации</a></li>
+            </ul>
+        </div>
+
+        <h3 style="margin-top: 2rem;"><i class="fas fa-book"></i> Рекомендуемая литература:</h3>
+        <div class="centered-list">
+            <ul>
+                <li>Гидденс, Энтони. Саттон, Филип. Основные понятия в социологии. — 3-е изд.. — М.: Изд. дом Высшей школы экономики, 2021. — 336 с.</li>
+                <li>Урри, Джон. Социология за пределами обществ: виды мобильности для XXI столетия. — 3-е изд.. — М.: Изд. дом Высшей школы экономики, 2012. — 336 с.</li>
+                <li>Штомпка, Пётр. Социология. Анализ современного общества. — М.: Логос, 2005. — 664 с.</li>
+                <li>Щепаньский, Ян. Элементарные понятия социологии. — М.: Прогресс, 1969. — 240 с.</li>
+                <li>Delanty, Gerard. Sociology // The Blackwell Encyclopedia of Sociology. — Oxford: Blackwell Publishing, 2009.</li>
+                <li>Franklin, Adrian. Society and biology // The Blackwell Encyclopedia of Sociology. — Oxford: Blackwell Publishing, 2009.</li>
+                <li>Ray, Larry. Society // The Blackwell Encyclopedia of Sociology. — Oxford: Blackwell Publishing, 2009.</li>
+                <li>Urry, John. Society // Sociology: The Key Concepts. — London, New York: Routledge, 2006.</li>
+                <li>Frisby, David. Sayer, Derek. Society. — Chichester; London and New York: Horwood, Tavistock, 1986.</li>
+                <li>Copp, David. The Concept of a Society // Dialogue: Canadian Philosophical Review. — 1992.</li>
+                <li>Elliott, Anthony. Turner, Bryan S. On Society. — Cambridge; Malden, MA: Polity Press, 2012.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+        
+        <!-- Обновленная экономическая секция -->
+        <section id="economy" class="section">
+            <h2 class="section-title"><i class="fas fa-chart-line"></i> Экономика как основа жизнедеятельности</h2>
+            <div class="content">
+                <div class="text-content">
+                    <p><strong>Экономика</strong> — это основа жизнедеятельности любого общества, система отношений по производству, распределению, обмену и потреблению материальных благ и услуг. Экономические процессы определяют уровень и качество жизни населения, возможности развития культуры, науки, образования и других сфер общественной жизни.</p>
+                    
+                    <h3 class="subsection-title"><i class="fas fa-project-diagram"></i> Основные формы экономических систем</h3>
+                    
+                    <div class="theory-grid">
+                        <div class="theory-card">
+                            <h4><i class="fas fa-seedling"></i> Традиционная экономика</h4>
+                            <p>Основана на обычаях, традициях и наследуемых практиках. Характерна для аграрных обществ с низким уровнем технологического развития. Производство ориентировано на удовлетворение собственных потребностей.</p>
+                        </div>
+                        
+                        <div class="theory-card">
+                            <h4><i class="fas fa-balance-scale"></i> Командная (плановая) экономика</h4>
+                            <p>Государство контролирует все ресурсы и средства производства. Централизованное планирование определяет что, как и для кого производить. Характерна для социалистических стран XX века.</p>
+                        </div>
+                        
+                        <div class="theory-card">
+                            <h4><i class="fas fa-chart-line"></i> Рыночная экономика</h4>
+                            <p>Основана на частной собственности и свободной конкуренции. Цены формируются под влиянием спроса и предложения. Государство играет минимальную роль в регулировании экономики.</p>
+                        </div>
+                        
+                        <div class="theory-card">
+                            <h4><i class="fas fa-handshake"></i> Смешанная экономика</h4>
+                            <p>Сочетает элементы рыночной и командной экономики. Государство регулирует ключевые отрасли, обеспечивает социальные гарантии, но оставляет пространство для частной инициативы. Преобладает в современных развитых странах.</p>
+                        </div>
+                    </div>
+                    
+                    <h3 class="subsection-title"><i class="fas fa-history"></i> Историческое развитие экономики</h3>
+                    
+                    <div class="subsection">
+                        <h4>Эволюция экономических отношений</h4>
+                        
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-date">Первобытное общество</div>
+                                <h4>Натуральное хозяйство</h4>
+                                <p>Уровень экономического развития был низким, обеспечивающим потребление на грани физического выживания. Сначала первобытные люди добывали средства к существованию охотой и собирательством, но в результате неолитической революции возникли земледелие и животноводство.</p>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-date">Древний мир</div>
+                                <h4>Разделение труда и рабовладение</h4>
+                                <p>Развитие общества привело к разделению труда — выделились земледельческие и пастушеские племена, появились ремесленники. Возникли социальное неравенство, социальные классы и государство. Появилось рабовладение.</p>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-date">Средневековье</div>
+                                <h4>Натуральное и дворцовое хозяйство</h4>
+                                <p>Преобладало натуральное хозяйство. Во многих государствах существовала дворцовая экономика, основанная на сочетании планового хозяйства (для крупных общественных работ) и натурального хозяйства.</p>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-date">Позднее Средневековье</div>
+                                <h4>Расширение торговли</h4>
+                                <p>С началом крестовых походов европейцы заново открыли для себя пряности, шёлк и другие товары, ставшие редкими в Европе. Это привело к расширению торговли и обострению торговой конкуренции.</p>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-date">Конец XV - XVIII века</div>
+                                <h4>Великие географические открытия</h4>
+                                <p>Эпоха великих географических открытий привела к формированию мировой экономики и началу эпохи первоначального накопления капитала.</p>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-date">Конец XVIII - XIX века</div>
+                                <h4>Промышленная революция</h4>
+                                <p>Началась промышленная революция, которая привела к тому, что в наиболее развитых странах большинство населения к концу XIX века было занято уже не в сельском хозяйстве, а в промышленности. Преобладающей экономической системой стал капитализм.</p>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-date">XX век</div>
+                                <h4>Две системы</h4>
+                                <p>В ряде стран была создана административно-командная социалистическая экономика. В остальных странах происходило развитие капитализма. Во второй половине XX века началась научно-техническая революция.</p>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-date">XXI век</div>
+                                <h4>Постиндустриальная экономика</h4>
+                                <p>Индустриальное общество в наиболее развитых странах превращается в постиндустриальное. В ряде стран, включая Россию, переход к постиндустриальной экономике тормозится в силу объективных и субъективных причин.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="subsection-title"><i class="fas fa-cogs"></i> Основные функции экономики в обществе</h3>
+                    
+                    <div class="theory-grid">
+                        <div class="theory-card">
+                            <h4><i class="fas fa-industry"></i> Производственная функция</h4>
+                            <p>Создание товаров и услуг для удовлетворения потребностей общества. Включает производство материальных благ и нематериальных услуг.</p>
+                        </div>
+                        
+                        <div class="theory-card">
+                            <h4><i class="fas fa-exchange-alt"></i> Распределительная функция</h4>
+                            <p>Определение доли каждого участника экономической деятельности в произведенном продукте. Включает распределение доходов, ресурсов и благ.</p>
+                        </div>
+                        
+                        <div class="theory-card">
+                            <h4><i class="fas fa-shopping-cart"></i> Обменная функция</h4>
+                            <p>Процесс движения товаров и услуг от производителей к потребителям. Осуществляется через рынок, торговлю и денежное обращение.</p>
+                        </div>
+                        
+                        <div class="theory-card">
+                            <h4><i class="fas fa-utensils"></i> Потребительская функция</h4>
+                            <p>Использование товаров и услуг для удовлетворения потребностей. Завершающая стадия экономического цикла, определяющая уровень жизни населения.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <h4><i class="fas fa-brain"></i> Современные тенденции в экономике</h4>
+                        <p>Современная экономика характеризуется глобализацией, цифровизацией, переходом к инновационной модели развития. Особое значение приобретают знания, информация, креативные способности человека как основные факторы экономического роста. Формируется цифровая экономика, основанная на интернет-технологиях, больших данных и искусственном интеллекте.</p>
+                    </div>
+                    
+                    <h3 class="subsection-title"><i class="fas fa-globe"></i> Экономическая система общества</h3>
+                    
+                    <div class="subsection">
+                        <p>Экономическая система общества включает в себя различные сектора: государственный, частный, смешанный. От эффективности экономической системы зависит:</p>
+                        
+                        <div class="centered-list">
+                            <ul>
+                                <li><strong>Благосостояние населения</strong> — уровень доходов, качество жизни, доступность товаров и услуг</li>
+                                <li><strong>Социальная стабильность</strong> — занятость, социальная защита, уменьшение неравенства</li>
+                                <li><strong>Международное положение</strong> — конкурентоспособность, участие в мировой экономике</li>
+                                <li><strong>Устойчивое развитие</strong> — баланс между экономическим ростом и сохранением окружающей среды</li>
+                            </ul>
+                        </div>
+                        
+                        <p>В условиях цифровизации общества возникают новые вызовы для экономики: автоматизация производства, трансформация рынка труда, развитие платформенной экономики, проблемы кибербезопасности и защиты персональных данных.</p>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <h4><i class="fas fa-eye"></i> Вызовы XXI века</h4>
+                        <p>Современная экономика сталкивается с беспрецедентными вызовами: пандемии и их экономические последствия, климатические изменения, энергетический переход, геополитическая нестабильность, технологическое неравенство. Эти вызовы требуют новых подходов к экономическому управлению, международному сотрудничеству и разработке устойчивых моделей развития.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sources">
+                <h3><i class="fas fa-link"></i> Источники и дополнительная литература:</h3>
+                <div class="centered-list">
+                    <ul>
+                        <li><a href="https://ru.wikipedia.org/wiki/Экономика" target="_blank">Википедия: Экономика</a></li>
+                        <li><a href="https://bigenc.ru/c/ekonomika-19fe01" target="_blank">Большая российская энциклопедия: Экономика</a></li>
+                        <li><a href="https://www.imf.org/ru/publications/weo/issues/2025/10/14/world-economic-outlook-october-2025" target="_blank">Международный валютный фонд</a></li>
+                        <li><a href="https://www.worldbank.org/ru/home" target="_blank">Всемирный банк: Экономические исследования</a></li>
+                        <li><a href="https://www.vedomosti.ru/economics" target="_blank">Ведомости: Экономические новости</a></li>
+                        <li><a href="https://www.economist.com/" target="_blank">The Economist</a></li>
+                        <li><a href="https://www.nber.org/" target="_blank">National Bureau of Economic Research</a></li>
+                        <!-- Добавленные ссылки из задания -->
+                        <li><a href="https://vocable.ru/termin-i-ponjatija/ehkonomika/nacionalnaja-ehkonomicheskaja-ehnciklopedija.html" target="_blank">Национальная экономическая энциклопедия</a></li>
+                        <li><a href="https://www.elibrary.ru/item.asp?id=19948208" target="_blank">Российские и зарубежные экономические журналы</a></li>
+                        <li><a href="https://ecsocman.hse.ru/economics/" target="_blank">Статьи по экономике из научных библиотек</a></li>
+                        <li><a href="https://www.ecsocman.edu.ru/" target="_blank">Электронная библиотека по экономике, теории активных систем и менеджменту</a></li>
+                        <li><a href="https://ru.wikipedia.org/wiki/%D0%9C%D0%B0%D0%BA%D1%80%D0%BE%D1%8D%D0%BA%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D0%BA%D0%B0" target="_blank">Макроэкономика. Электронные книги по макроэкономике</a></li>
+                        <li><a href="https://ru.wikipedia.org/wiki/%D0%9C%D0%B8%D0%BA%D1%80%D0%BE%D1%8D%D0%BA%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D0%BA%D0%B0" target="_blank">Микроэкономика. Электронные книги по микроэкономике</a></li>
+                        <li><a href="https://ecsocman.hse.ru/" target="_blank">Федеральный образовательный портал «Экономика. Социология. Менеджмент»</a></li>
+                        <li><a href="https://www.economy.by/" target="_blank">Белорусский экономический портал «ЭКОНОМИКА.BY»</a></li>
+                        <li><a href="https://economic-law.ru/" target="_blank">Образовательный портал «Экономика. Управление. Право»</a></li>
+                        <!-- Конец добавленных ссылок -->
+                    </ul>
+                </div>
+                
+                <h3 style="margin-top: 2rem;"><i class="fas fa-book"></i> Рекомендуемая литература:</h3>
+                <div class="centered-list">
+                    <ul>
+                        <li>Самуэльсон П., Нордхаус В. Экономика. — М.: Вильямс, 2020. — 1360 с.</li>
+                        <li>Мэнкью Н.Г. Принципы экономикс. — СПб.: Питер, 2021. — 880 с.</li>
+                        <li>Стиглиц Дж.Ю. Экономика государственного сектора. — М.: ИНФРА-М, 2022. — 720 с.</li>
+                        <li>Аганбегян А.Г. Экономика России на перепутье и выбор пути. — М.: АСТ, 2019. — 352 с.</li>
+                        <li>Иноземцев В.Л. Современное постиндустриальное общество: природа, противоречия, перспективы. — М.: Логос, 2020. — 304 с.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Этническая секция -->
+        <!-- Обновленная этническая секция -->
+<section id="ethnic" class="section">
+    <h2 class="section-title"><i class="fas fa-globe-americas"></i> Этнические общества и нации</h2>
+    <div class="content">
+        <div class="text-content">
+            <p><strong>Этнические общества</strong> — это исторически сложившиеся устойчивые группы людей, объединенные общностью происхождения, культуры, языка, самосознания и территории. Этничность представляет собой одну из фундаментальных форм социальной организации человечества.</p>
+            
+            <div class="highlight-box">
+                <h4><i class="fas fa-lightbulb"></i> Основные характеристики этнических общностей:</h4>
+                <div class="centered-list">
+                    <ul>
+                        <li><strong>Общее происхождение</strong> — реальное или мифологическое представление об общих предках</li>
+                        <li><strong>Единый язык</strong> — как средство общения и культурной передачи</li>
+                        <li><strong>Специфическая культура</strong> — традиции, обычаи, искусство, религия</li>
+                        <li><strong>Этническое самосознание</strong> — осознание своей принадлежности к группе</li>
+                        <li><strong>Чувство солидарности</strong> — эмоциональная связь с членами своей группы</li>
+                        <li><strong>Территориальная общность</strong> — связь с определенной территорией</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-history"></i> Историческое развитие этнических концепций</h3>
+            
+            <div class="subsection">
+                <h4>Античные и средневековые представления</h4>
+                <p>В античности этничность понималась через призму культуры и языка. Греки выделяли "эллинов" (себя) и "варваров" (всех остальных) по культурному признаку. Римляне различали народы по территориальному и правовому принципу.</p>
+                <p>В Средневековье этничность была тесно связана с религиозной принадлежностью. Христианство, ислам и другие религии создавали надэтнические общности, где вероисповедание часто преобладало над этнической идентичностью.</p>
+            </div>
+            
+            <div class="subsection">
+                <h4>Формирование наций в Новое время</h4>
+                <p>Современное понимание нации начало формироваться в Европе в XVII-XVIII веках. Важные факторы:</p>
+                <div class="centered-list">
+                    <ul>
+                        <li><strong>Вестфальский мир 1648 года</strong> — принцип суверенитета государств</li>
+                        <li><strong>Эпоха Просвещения</strong> — идеи народного суверенитета</li>
+                        <li><strong>Великая французская революция</strong> — концепция гражданской нации</li>
+                        <li><strong>Романтизм XIX века</strong> — интерес к народной культуре и языку</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3 class="subsection-title"><i class="fas fa-sitemap"></i> Эволюция форм этнических общностей</h3>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">Первобытность</div>
+                    <h4>Род и племя</h4>
+                    <p><strong>Род</strong> — кровнородственное объединение людей, ведущих происхождение от общего предка. <strong>Племя</strong> — объединение нескольких родов, имеющих общую территорию, язык, культуру и самосознание. Характерны для охотничье-собирательских и раннеземледельческих обществ.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">Античность - Средневековье</div>
+                    <h4>Народность</h4>
+                    <p>Формируется с возникновением государства и социального неравенства. Характеризуется более устойчивой общностью территории, языка, культуры, но еще не имеет развитой экономической общности. Примеры: древние греки, римляне, древние русичи.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">Новое время</div>
+                    <h4>Нация</h4>
+                    <p>Высшая форма этнической общности, складывающаяся в период становления капитализма. Характеризуется единством территории, экономической жизни, культуры и национального самосознания. Формируется на основе консолидации различных этнических групп.</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-user-friends"></i> Теории этничности и нации</h3>
+            
+            <div class="theory-grid">
+                <div class="theory-card">
+                    <h4><i class="fas fa-dna"></i> Примордиализм</h4>
+                    <p>Этничность как изначальная, природная характеристика человека. Этнические группы имеют объективные характеристики (язык, культура, происхождение). Представители: К. Гирц, Э. Шилз.</p>
+                </div>
+                
+                <div class="theory-card">
+                    <h4><i class="fas fa-brain"></i> Конструктивизм</h4>
+                    <p>Этничность — социальный конструкт, создаваемый элитами для достижения политических целей. Нации "изобретаются" интеллектуалами и политиками. Представители: Б. Андерсон, Э. Геллнер.</p>
+                </div>
+                
+                <div class="theory-card">
+                    <h4><i class="fas fa-balance-scale"></i> Инструментализм</h4>
+                    <p>Этничность — инструмент для мобилизации групп в борьбе за ресурсы и власть. Этническая идентичность актуализируется в ситуации конкуренции. Представители: П. Брасс, М. Хехтер.</p>
+                </div>
+                
+                <div class="theory-card">
+                    <h4><i class="fas fa-book"></i> Этносимволизм</h4>
+                    <p>Сочетает элементы примордиализма и конструктивизма. Этничность основана на мифах, символах и исторической памяти. Представитель: Э. Смит.</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-flag"></i> Типология наций</h3>
+            
+            <div class="subsection">
+                <h4>Гражданская (политическая) нация</h4>
+                <p>Основана на политической общности и гражданстве. Формируется в рамках государства, включает людей разных этнических происхождений. Примеры: американская, французская нации.</p>
+                
+                <h4>Этническая (культурная) нация</h4>
+                <p>Основана на общности происхождения, языка и культуры. Этничность является основным критерием принадлежности. Примеры: немецкая, японская нации (в традиционном понимании).</p>
+                
+                <h4>Постколониальные нации</h4>
+                <p>Формируются после получения независимости от колониальных держав. Часто объединяют множество этнических групп в рамках искусственных границ. Примеры: большинство африканских и азиатских наций.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-handshake"></i> Межэтнические отношения</h3>
+            
+            <div class="theory-grid">
+                <div class="theory-card">
+                    <h4><i class="fas fa-blender"></i> Ассимиляция</h4>
+                    <p>Поглощение одной этнической группой другой с утратой последней своей идентичности. Может быть добровольной (естественной) или принудительной.</p>
+                </div>
+                
+                <div class="theory-card">
+                    <h4><i class="fas fa-puzzle-piece"></i> Интеграция</h4>
+                    <p>Взаимное приспособление этнических групп при сохранении их культурных особенностей. Формирование общегражданской идентичности.</p>
+                </div>
+                
+                <div class="theory-card">
+                    <h4><i class="fas fa-rainbow"></i> Мультикультурализм</h4>
+                    <p>Признание и поддержание культурного разнообразия в рамках одного общества. Официальное признание прав этнических меньшинств.</p>
+                </div>
+                
+                <div class="theory-card">
+                    <h4><i class="fas fa-divide"></i> Сегрегация</h4>
+                    <p>Принудительное разделение этнических групп в различных сферах жизни. Часто приводит к дискриминации и конфликтам.</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-book-open"></i> Этнические процессы в истории России</h3>
+            
+            <div class="subsection">
+                <h4>Древнерусская народность (IX-XIII вв.)</h4>
+                <p>Формирование на основе восточнославянских племен под влиянием варягов, финно-угорских и тюркских народов. Общий древнерусский язык, православная вера, "Русская Правда".</p>
+                
+                <h4>Формирование русской народности (XIV-XVII вв.)</h4>
+                <p>Консолидация вокруг Московского княжества после монголо-татарского нашествия. Преодоление удельной раздробленности, освоение новых территорий.</p>
+                
+                <h4>Российская империя (XVIII - начало XX вв.)</h4>
+                <p>Создание многоэтничной империи. Политика русификации сочеталась с сохранением автономии некоторых народов. Формирование общероссийской гражданской идентичности.</p>
+                
+                <h4>Советский период (1917-1991)</h4>
+                <p>Политика коренизации 1920-х годов, затем русификация. Формирование "советского народа" как новой исторической общности. Сохранение этнических автономий.</p>
+                
+                <h4>Современная Россия (с 1991 года)</h4>
+                <p>Этнический ренессанс после распада СССР. Проблемы национально-государственного строительства. Баланс между федерализмом и единством страны.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-globe"></i> Этнические процессы в мировом контексте</h3>
+            
+            <div class="subsection">
+                <h4>Колониализм и его последствия</h4>
+                <p>Искусственные границы, разделение единых этносов, создание многоэтнических государств. Проблемы постколониальной национальной идентичности.</p>
+                
+                <h4>Национализм и национальные движения</h4>
+                <p>XIX век — "весна народов" в Европе. XX век — деколонизация и создание новых национальных государств. Современность — региональные национализмы и сепаратизм.</p>
+                
+                <h4>Миграция и диаспоры</h4>
+                <p>Формирование транснациональных этнических сообществ. Проблемы интеграции мигрантов. Феномен "диаспоризации" этничности.</p>
+                
+                <h4>Глобализация и этничность</h4>
+                <p>Парадокс: унификация культуры и возрождение этнической идентичности. "Глокализация" — сочетание глобальных и локальных тенденций.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4><i class="fas fa-exclamation-triangle"></i> Современные вызовы и тенденции</h4>
+                <div class="centered-list">
+                    <ul>
+                        <li><strong>Этническое возрождение</strong> — рост этнического самосознания в глобализирующемся мире</li>
+                        <li><strong>Миграционные кризисы</strong> — проблемы интеграции и межэтнических отношений</li>
+                        <li><strong>Этнотерриториальные конфликты</strong> — борьба за самоопределение и контроль над ресурсами</li>
+                        <li><strong>Кризис мультикультурализма</strong> — трудности интеграции в европейских обществах</li>
+                        <li><strong>Цифровизация этничности</strong> — виртуальные этнические сообщества и сети</li>
+                        <li><strong>Экология и этничность</strong> — связь коренных народов с природной средой</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-eye"></i> Перспективы развития этнических отношений</h3>
+            
+            <div class="subsection">
+                <p>В XXI веке этничность остается мощной силой, но меняет свои формы и проявления:</p>
+                <div class="centered-list">
+                    <ul>
+                        <li><strong>Гибридные идентичности</strong> — сочетание нескольких этнических принадлежностей</li>
+                        <li><strong>Транснациональные этнические сети</strong> — поддержание связей через границы</li>
+                        <li><strong>Космополитизм и локальность</strong> — одновременное усиление глобальных и местных идентичностей</li>
+                        <li><strong>Этничность как ресурс</strong> — использование культурного капитала в глобальной экономике</li>
+                        <li><strong>Экологическая этничность</strong> — связь этнических движений с экологическими проблемами</li>
+                    </ul>
+                </div>
+                
+                <p>Ключевой задачей современности является поиск баланса между единством многоэтнических государств и уважением к культурному разнообразию. Успешные модели управления этническим разнообразием сочетают:</p>
+                <div class="centered-list">
+                    <ul>
+                        <li>Конституционное признание многонационального характера государства</li>
+                        <li>Систему национально-культурных автономий</li>
+                        <li>Образовательные программы по межкультурному диалогу</li>
+                        <li>Правовую защиту от этнической дискриминации</li>
+                        <li>Поддержку языкового и культурного разнообразия</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h4><i class="fas fa-brain"></i> Этничность в цифровую эпоху</h4>
+                <p>Интернет и социальные сети создают новые формы этнической коммуникации и идентичности. Виртуальные этнические сообщества позволяют сохранять культурные связи для диаспор. Одновременно возникают проблемы цифрового разделения, кибернационализма и использования цифровых технологий для разжигания межэтнической вражды. Понимание этих новых реалий необходимо для построения гармоничных межэтнических отношений в XXI веке.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="sources">
+        <h3><i class="fas fa-link"></i> Источники и дополнительная литература:</h3>
+        <div class="centered-list">
+            <ul>
+                <li><a href="https://ru.wikipedia.org/wiki/Этнос" target="_blank">Википедия: Этнос</a></li>
+                <li><a href="https://bigenc.ru/c/etnologiia-f7e556" target="_blank">Большая российская энциклопедия: Этнология</a></li>
+                <li><a href="https://www.un.org/development/desa/indigenouspeoples/" target="_blank">ООН: Коренные народы</a></li>
+                <li><a href="https://unesdoc.unesco.org/ark:/48223/pf0000379186" target="_blank">ЮНЕСКО: Культурное разнообразие</a></li>
+                <li><a href="https://www.cambridge.org/core/journals/nations-and-nationalism" target="_blank">Нации и национализм (Кембриджский журнал)</a></li>
+                <li><a href="https://www.tandfonline.com/toc/rers20/current" target="_blank">Этнические и расовые исследования</a></li>
+                <li><a href="https://www.sciencedirect.com/topics/social-sciences/ethnicity" target="_blank">ScienceDirect: Этничность</a></li>
+                <li><a href="https://www.annualreviews.org/journal/anthro" target="_blank">Annual Reviews: Антропология</a></li>
+                <li><a href="https://www.eth.mpg.de/" target="_blank">Институт этнологии Макса Планка</a></li>
+            </ul>
+        </div>
+
+        <h3 style="margin-top: 2rem;"><i class="fas fa-book"></i> Рекомендуемая литература:</h3>
+        <div class="centered-list">
+            <ul>
+                <li>Андерсон, Бенедикт. Воображаемые сообщества. Размышления об истоках и распространении национализма. — М.: КАНОН-пресс-Ц, Кучково поле, 2001. — 288 с.</li>
+                <li>Геллнер, Эрнест. Нации и национализм. — М.: Прогресс, 1991. — 320 с.</li>
+                <li>Смит, Энтони Д. Национализм и модернизм: Критический обзор современных теорий наций и национализма. — М.: Праксис, 2004. — 464 с.</li>
+                <li>Тишков, Валерий. Реквием по этносу: Исследования по социально-культурной антропологии. — М.: Наука, 2003. — 544 с.</li>
+                <li>Хобсбаум, Эрик. Нации и национализм после 1780 года. — СПб.: Алетейя, 1998. — 306 с.</li>
+                <li>Бромлей, Юлиан. Очерки теории этноса. — М.: ЛКИ, 2008. — 440 с.</li>
+                <li>Малахов, Владимир. Скромное обаяние расизма и другие статьи. — М.: Дом интеллектуальной книги, 2001. — 176 с.</li>
+                <li>Коротеева, Виктория. Теории национализма в зарубежных социальных науках. — М.: РГГУ, 1999. — 224 с.</li>
+                <li>Хантингтон, Сэмюэл. Столкновение цивилизаций. — М.: АСТ, 2003. — 603 с.</li>
+                <li>Арутюнян, Юрий, Дробижева, Леокадия, Сусоколов, Александр. Этносоциология. — М.: Аспект Пресс, 1999. — 271 с.</li>
+                <li>Brubaker, Rogers. Ethnicity without groups. — Cambridge, MA: Harvard University Press, 2004. — 283 p.</li>
+                <li>Horowitz, Donald L. Ethnic Groups in Conflict. — Berkeley: University of California Press, 1985. — 697 p.</li>
+                <li>Kymlicka, Will. Multicultural Citizenship: A Liberal Theory of Minority Rights. — Oxford: Oxford University Press, 1995. — 280 p.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+        
+        <!-- Правовая секция -->
+                <!-- Правовая секция - ОБНОВЛЕННАЯ -->
+        <section id="law" class="section">
+            <h2 class="section-title"><i class="fas fa-balance-scale"></i> Правовое регулирование гражданских, семейных, трудовых взаимодействий</h2>
+            <div class="content">
+                <div class="text-content">
+                    <p><strong>Правовое регулирование</strong> — это целенаправленное воздействие государства на общественные отношения с помощью специальных юридических средств (норм права, правоотношений, актов реализации и применения права). В современном сложноорганизованном обществе право выступает основным социальным регулятором, обеспечивающим стабильность, предсказуемость и справедливость взаимодействий между людьми.</p>
+                    
+                    <div class="highlight-box">
+                        <h4><i class="fas fa-lightbulb"></i> Основные принципы правового регулирования:</h4>
+                        <div class="centered-list">
+                            <ul>
+                                <li><strong>Законность</strong> — все участники общественных отношений обязаны соблюдать законы</li>
+                                <li><strong>Равенство перед законом</strong> — все субъекты права равны независимо от социального статуса</li>
+                                <li><strong>Справедливость</strong> — правовые нормы должны соответствовать представлениям о справедливости</li>
+                                <li><strong>Гуманизм</strong> — право должно защищать человека, его права и свободы</li>
+                                <li><strong>Сочетание убеждения и принуждения</strong> — правовое регулирование использует как воспитательные меры, так и государственное принуждение</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title"><i class="fas fa-history"></i> Историческое развитие правового регулирования</h3>
+                    
+                    <div class="subsection">
+                        <h4>Древний мир: истоки правового регулирования</h4>
+                        <p>Первые правовые системы возникли в древних цивилизациях (Месопотамия, Египет, Индия, Китай). Знаменитые памятники права:</p>
+                        <div class="centered-list">
+                            <ul>
+                                <li><strong>Законы Хаммурапи</strong> (Вавилон, XVIII век до н.э.) — один из древнейших сводов законов, регулировавший имущественные, семейные и уголовные отношения по принципу "око за око"</li>
+                                <li><strong>Законы Ману</strong> (Древняя Индия, II век до н.э. - II век н.э.) — регулировали все стороны жизни с позиций дхармы (религиозного долга)</li>
+                                <li><strong>Римское право</strong> — наиболее развитая правовая система античности, заложившая основы современного гражданского права (деление на публичное и частное право, институт собственности, договорное право)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h4>Средневековье: религиозное и обычное право</h4>
+                        <p>В Средние века право развивалось в нескольких направлениях:</p>
+                        <div class="theory-grid">
+                            <div class="theory-card">
+                                <h4>Каноническое право</h4>
+                                <p>Право христианской церкви, регулировавшее брачно-семейные отношения, вопросы наследования, церковной собственности. Особенно развито в католической Европе.</p>
+                            </div>
+                            
+                            <div class="theory-card">
+                                <h4>Обычное право</h4>
+                                <p>Право, основанное на обычаях и традициях конкретной местности. Регулировало поземельные отношения, семейные уклады, порядок наследования.</p>
+                            </div>
+                            
+                            <div class="theory-card">
+                                <h4>Феодальное право</h4>
+                                <p>Закрепляло иерархическую структуру феодального общества, отношения вассалитета, крепостную зависимость.</p>
+                            </div>
+                            
+                            <div class="theory-card">
+                                <h4>Городское право</h4>
+                                <p>Развивалось в средневековых городах, регулировало торговлю, ремесло, имущественные отношения горожан.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h4>Новое время: формирование современных правовых систем</h4>
+                        <p>Эпоха Просвещения и буржуазных революций привела к созданию современных правовых систем:</p>
+                        <div class="centered-list">
+                            <ul>
+                                <li><strong>Естественно-правовая школа</strong> (Гроций, Локк, Руссо) — идея естественных прав человека, общественного договора, народного суверенитета</li>
+                                <li><strong>Французский гражданский кодекс 1804 года (Кодекс Наполеона)</strong> — классический образец гражданского права, основанный на принципах равенства, свободы договора, неприкосновенности собственности</li>
+                                <li><strong>Германское гражданское уложение 1896 года</strong> — другая модель гражданского права, более систематизированная и абстрактная</li>
+                                <li><strong>Становление трудового права</strong> — как ответ на социальные проблемы промышленной революции (фабричное законодательство, ограничение рабочего дня, охрана труда)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h4>XX век: социалистическое право и международное право</h4>
+                        <p>Две основные правовые семьи XX века:</p>
+                        <div class="theory-grid">
+                            <div class="theory-card">
+                                <h4>Социалистическое право</h4>
+                                <p>Сформировалось в СССР и странах социалистического лагеря. Особенности: приоритет государственной собственности, плановое регулирование экономики, подчинение права политическим задачам.</p>
+                            </div>
+                            
+                            <div class="theory-card">
+                                <h4>Романо-германская и англосаксонская семьи</h4>
+                                <p>Продолжали развитие в западных странах, адаптируясь к новым социально-экономическим условиям (антимонопольное право, потребительское право, экологическое право).</p>
+                            </div>
+                        </div>
+                        <p>После Второй мировой войны активно развивается международное право, особенно в области прав человека (Всеобщая декларация прав человека 1948 года, международные пакты о правах).</p>
+                    </div>
+
+                    <h3 class="subsection-title"><i class="fas fa-user-friends"></i> Гражданское право: регулирование имущественных отношений</h3>
+                    
+                    <div class="subsection">
+                        <h4>Предмет и метод гражданского права</h4>
+                        <p>Гражданское право регулирует имущественные и связанные с ними личные неимущественные отношения, основанные на равенстве, автономии воли и имущественной самостоятельности участников.</p>
+                        
+                        <div class="theory-grid">
+                            <div class="theory-card">
+                                <h4><i class="fas fa-home"></i> Вещное право</h4>
+                                <p>Регулирует отношения по владению, пользованию и распоряжению имуществом. Основные институты: право собственности, ограниченные вещные права (сервитуты, право хозяйственного ведения).</p>
+                            </div>
+                            
+                            <div class="theory-card">
+                                <h4><i class="fas fa-handshake"></i> Обязательственное право</h4>
+                                <p>Регулирует отношения, в которых одно лицо (должник) обязано совершить в пользу другого лица (кредитора) определенное действие. Источники обязательств: договоры, причинение вреда, неосновательное обогащение.</p>
+                            </div>
+                            
+                            <div class="theory-card">
+                                <h4><i class="fas fa-heart"></i> Наследственное право</h4>
+                                <p>Регулирует переход имущества умершего (наследодателя) к другим лицам (наследникам). Основные формы наследования: по завещанию и по закону.</p>
+                            </div>
+                            
+                            <div class="theory-card">
+                                <h4><i class="fas fa-brain"></i> Нематериальные блага</h4>
+                                <p>Защищает личные неимущественные права: право на жизнь, здоровье, достоинство, честь, деловую репутацию, неприкосновенность частной жизни.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h4>Принципы гражданского права</h4>
+                        <div class="centered-list">
+                            <ul>
+                                <li><strong>Равенство участников гражданских правоотношений</strong></li>
+                                <li><strong>Неприкосновенность собственности</strong></li>
+                                <li><strong>Свобода договора</strong> — право самостоятельно выбирать контрагента и определять условия договора</li>
+                                <li><strong>Недопустимость произвольного вмешательства в частные дела</strong></li>
+                                <li><strong>Беспрепятственное осуществление гражданских прав</strong></li>
+                                <li><strong>Обеспечение восстановления нарушенных прав и их судебная защита</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title"><i class="fas fa-home"></i> Семейное право: регулирование семейных отношений</h3>
+                    
+                    <div class="subsection">
+                        <h4>Эволюция семейного права</h4>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-date">Древний мир</div>
+                                <h4>Патриархальная семья</h4>
+                                <p>Семья как экономическая единица, абсолютная власть отца (pater familias в римском праве). Брак — сделка между семьями.</p>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-date">Средневековье</div>
+                                <h4>Церковный брак</h4>
+                                <p>Брак становится таинством, регулируется каноническим правом. Нерасторжимость брака, моногамия.</p>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-date">XIX век</div>
+                                <h4>Гражданский брак</h4>
+                                <p>Отделение брака от церкви, признание гражданской формы брака. Появление возможности развода.</p>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-date">XX век</div>
+                                <h4>Равенство супругов</h4>
+                                <p>Установление равных прав и обязанностей супругов. Защита прав детей. Развитие института усыновления.</p>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-date">XXI век</div>
+                                <h4>Плюрализм форм семьи</h4>
+                                <p>Признание разнообразия семейных моделей. Правовое регулирование однополых союзов в некоторых странах. Акцент на защите прав ребенка.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h4>Основные институты современного семейного права</h4>
+                        <div class="theory-grid">
+                            <div class="theory-card">
+                                <h4><i class="fas fa-ring"></i> Заключение и прекращение брака</h4>
+                                <p>Условия и порядок заключения брака (добровольность, достижение брачного возраста). Основания и порядок расторжения брака.</p>
+                            </div>
+                            
+                            <div class="theory-card">
+                                <h4><i class="fas fa-users"></i> Права и обязанности супругов</h4>
+                                <p>Личные неимущественные права (выбор фамилии, профессии, места жительства). Имущественные отношения (совместная собственность, алиментные обязательства).</p>
+                            </div>
+                            
+                            <div class="theory-card">
+                                <h4><i class="fas fa-child"></i> Права и обязанности родителей и детей</h4>
+                                <p>Родительские права и обязанности по воспитанию и содержанию детей. Права несовершеннолетних детей. Установление происхождения детей.</p>
+                            </div>
+                            
+                            <div class="theory-card">
+                                <h4><i class="fas fa-hand-holding-usd"></i> Алиментные обязательства</h4>
+                                <p>Обязанности по содержанию нетрудоспособных членов семьи: детей, супругов, родителей. Порядок уплаты и взыскания алиментов.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h4>Современные тенденции в семейном праве</h4>
+                        <div class="centered-list">
+                            <ul>
+                                <li><strong>Расширение форм семейных союзов</strong> — признание гражданских партнерств, однополых браков</li>
+                                <li><strong>Приоритет защиты прав ребенка</strong> — Конвенция ООН о правах ребенка 1989 года</li>
+                                <li><strong>Борьба с домашним насилием</strong> — специальные законы о предотвращении насилия в семье</li>
+                                <li><strong>Развитие института суррогатного материнства</strong> — правовое регулирование вспомогательных репродуктивных технологий</li>
+                                <li><strong>Международное семейное право</strong> — регулирование семейных отношений с иностранным элементом</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title"><i class="fas fa-briefcase"></i> Трудовое право: регулирование трудовых отношений</h3>
+                    
+                    <div class="subsection">
+                        <h4>Историческое развитие трудового права</h4>
+                        <p>Трудовое право как самостоятельная отрасль сформировалось в XIX-XX веках в ответ на социальные проблемы промышленной революции:</p>
+                        <div class="centered-list">
+                            <ul>
+                                <li><strong>Фабричное законодательство</strong> (Англия, начало XIX века) — первые ограничения эксплуатации (запрет ночного труда детей, ограничение рабочего дня)</li>
+                                <li><strong>Социальное законодательство Бисмарка</strong> (Германия, 1880-е годы) — первые законы о социальном страховании (от несчастных случаев, по болезни, по инвалидности и старости)</li>
+                                <li><strong>Международная организация труда</strong> (1919) — разработка международных трудовых стандартов</li>
+                                <li><strong>После Второй мировой войны</strong> — развитие социального государства, расширение трудовых прав, признание коллективных трудовых прав</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h4>Основные институты трудового права</h4>
+                        <div class="theory-grid">
+                            <div class="theory-card">
+                                <h4><i class="fas fa-file-contract"></i> Трудовой договор</h4>
+                                <p>Соглашение между работником и работодателем. Содержание, виды, порядок заключения, изменения и прекращения. Испытательный срок.</p>
+                            </div>
+                            
+                            <div class="theory-card">
+                                <h4><i class="fas fa-clock"></i> Рабочее время и время отдыха</h4>
+                                <p>Нормальная продолжительность рабочего времени. Сверхурочная работа. Виды времени отдыха: перерывы, выходные, праздники, отпуска.</p>
+                            </div>
+                            
+                            <div class="theory-card">
+                                <h4><i class="fas fa-money-bill-wave"></i> Оплата труда</h4>
+                                <p>Системы оплаты труда. Минимальный размер оплаты труда. Гарантии и компенсации. Нормирование труда.</p>
+                            </div>
+                            
+                            <div class="theory-card">
+                                <h4><i class="fas fa-hard-hat"></i> Охрана труда</h4>
+                                <p>Право работника на труд в условиях безопасности. Обязанности работодателя по обеспечению безопасных условий труда. Расследование несчастных случаев.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h4>Коллективное трудовое право</h4>
+                        <p>Регулирование отношений между работниками (их представителями), работодателями (их представителями), органами государственной власти:</p>
+                        <div class="centered-list">
+                            <ul>
+                                <li><strong>Коллективные договоры и соглашения</strong> — правовые акты, регулирующие социально-трудовые отношения в организации или отрасли</li>
+                                <li><strong>Участие работников в управлении организацией</strong></li>
+                                <li><strong>Социальное партнерство</strong> — система взаимоотношений между работниками, работодателями, органами государственной власти</li>
+                                <li><strong>Коллективные трудовые споры и забастовки</strong> — порядок разрешения коллективных трудовых споров, право на забастовку</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title"><i class="fas fa-globe"></i> Международное регулирование гражданских, семейных и трудовых отношений</h3>
+                    
+                    <div class="subsection">
+                        <h4>Международные договоры и конвенции</h4>
+                        <div class="theory-grid">
+                            <div class="theory-card">
+                                <h4>Международное частное право</h4>
+                                <p>Регулирование гражданско-правовых отношений с иностранным элементом. Коллизионные нормы. Гаагские конвенции.</p>
+                            </div>
+                            
+                            <div class="theory-card">
+                                <h4>Международное семейное право</h4>
+                                <p>Конвенции о правах ребенка, о взыскании алиментов за рубежом, о защите детей и сотрудничестве в области международного усыновления.</p>
+                            </div>
+                            
+                            <div class="theory-card">
+                                <h4>Международное трудовое право</h4>
+                                <p>Конвенции Международной организации труда (МОТ). Европейская социальная хартия. Международные стандарты трудовых прав.</p>
+                            </div>
+                            
+                            <div class="theory-card">
+                                <h4>Международное право прав человека</h4>
+                                <p>Международные пакты о правах человека. Европейская конвенция о защите прав человека. Право на справедливое судебное разбирательство.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title"><i class="fas fa-laptop-code"></i> Современные вызовы и тенденции</h3>
+                    
+                    <div class="subsection">
+                        <h4>Цифровизация и право</h4>
+                        <div class="centered-list">
+                            <ul>
+                                <li><strong>Электронные сделки и цифровые договоры</strong> — правовое признание электронной подписи, smart-контракты</li>
+                                <li><strong>Цифровые активы и криптовалюты</strong> — правовой статус, регулирование оборота</li>
+                                <li><strong>Защита персональных данных</strong> — GDPR в ЕС, аналогичные законы в других странах</li>
+                                <li><strong>Право интеллектуальной собственности в цифровую эпоху</strong> — авторское право в интернете, борьба с пиратством</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h4>Новые формы труда и их регулирование</h4>
+                        <div class="centered-list">
+                            <ul>
+                                <li><strong>Дистанционная работа и телеработа</strong> — особенности правового регулирования</li>
+                                <li><strong>Гиг-экономика и платформенная занятость</strong> — правовой статус работников платформ (Uber, Яндекс.Такси и др.)</li>
+                                <li><strong>Искусственный интеллект в трудовых отношениях</strong> — автоматизация, алгоритмическое управление, право на "человеческое общение"</li>
+                                <li><strong>Право на цифровое отключение</strong> — защита от постоянной доступности работника</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h4>Современные вызовы семейному праву</h4>
+                        <div class="centered-list">
+                            <ul>
+                                <li><strong>Биотехнологии и право</strong> — суррогатное материнство, ЭКО, редактирование генома</li>
+                                <li><strong>Межкультурные браки</strong> — столкновение разных правовых и культурных традиций</li>
+                                <li><strong>Защита от домашнего насилия</strong> — развитие специального законодательства</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="highlight-box">
+                        <h4><i class="fas fa-balance-scale"></i> Принципы эффективного правового регулирования в XXI веке</h4>
+                        <div class="centered-list">
+                            <ul>
+                                <li><strong>Гибкость и адаптивность</strong> — способность права быстро реагировать на технологические и социальные изменения</li>
+                                <li><strong>Доступность и ясность</strong> — право должно быть понятным для обычных граждан</li>
+                                <li><strong>Технологическая нейтральность</strong> — правовые нормы не должны привязываться к конкретным технологиям</li>
+                                <li><strong>Международная гармонизация</strong> — сближение правовых систем в условиях глобализации</li>
+                                <li><strong>Баланс интересов</strong> — поиск компромисса между различными социальными группами</li>
+                                <li><strong>Эффективное правоприменение</strong> — наличие действенных механизмов защиты прав</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="highlight-box">
+                        <h4><i class="fas fa-eye"></i> Перспективы развития правового регулирования</h4>
+                        <p>В XXI веке правовое регулирование сталкивается с беспрецедентными вызовами, связанными с цифровой трансформацией, глобализацией, изменением социальных структур. Ключевые направления развития:</p>
+                        <div class="centered-list">
+                            <ul>
+                                <li><strong>Цифровое право</strong> — формирование новой отрасли, регулирующей отношения в цифровой среде</li>
+                                <li><strong>Экологическое право</strong> — усиление регулирования в ответ на климатические изменения</li>
+                                <li><strong>Биоправо</strong> — регулирование биотехнологий, генной инженерии, нейротехнологий</li>
+                                <li><strong>Глобальное право</strong> — развитие наднациональных правовых механизмов</li>
+                                <li><strong>Правовая технология (Legal Tech)</strong> — использование ИИ и big data в правотворчестве и правоприменении</li>
+                            </ul>
+                        </div>
+                        <p>Эффективное правовое регулирование в современном мире требует не только совершенствования законодательства, но и развития правовой культуры, улучшения работы правоприменительных органов, внедрения современных технологий в юридическую практику.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sources">
+                <h3><i class="fas fa-link"></i> Источники и дополнительная литература:</h3>
+                <div class="centered-list">
+                    <ul>
+                        <li><a href="https://ru.wikipedia.org/wiki/Гражданское_право" target="_blank">Википедия: Гражданское право</a></li>
+                        <li><a href="https://ru.wikipedia.org/wiki/Семейное_право" target="_blank">Википедия: Семейное право</a></li>
+                        <li><a href="https://ru.wikipedia.org/wiki/Трудовое_право" target="_blank">Википедия: Трудовое право</a></li>
+                        <li><a href="https://www.consultant.ru/document/cons_doc_LAW_8982/" target="_blank">Гражданский кодекс РФ</a></li>
+                        <li><a href="https://www.consultant.ru/document/cons_doc_LAW_8982/" target="_blank">Семейный кодекс РФ</a></li>
+                        <li><a href="https://www.consultant.ru/document/cons_doc_LAW_34683/" target="_blank">Трудовой кодекс РФ</a></li>
+                        <li><a href="https://www.ilo.org/global/lang--en/index.htm" target="_blank">Международная организация труда</a></li>
+                        <li><a href="https://www.un.org/ru/" target="_blank">ООН: Международное право</a></li>
+                        <li><a href="https://www.coe.int/en/web/conventions/full-list" target="_blank">Совет Европы: Конвенции</a></li>
+                        <li><a href="https://europa.eu/european-union/law_en" target="_blank">Право Европейского союза</a></li>
+                        <li><a href="https://www.lexology.com/" target="_blank">Lexology: Юридические обзоры</a></li>
+                        <li><a href="https://www.law.cornell.edu/" target="_blank">Юридическая информация Cornell University</a></li>
+                        <li><a href="https://www.americanbar.org/" target="_blank">Американская ассоциация юристов</a></li>
+                        <li><a href="https://www.supremecourt.gov/" target="_blank">Верховный суд США</a></li>
+                        <li><a href="https://curia.europa.eu/" target="_blank">Суд Европейского союза</a></li>
+                        <li><a href="https://www.echr.coe.int/" target="_blank">Европейский суд по правам человека</a></li>
+                    </ul>
+                </div>
+
+                <h3 style="margin-top: 2rem;"><i class="fas fa-book"></i> Рекомендуемая литература:</h3>
+                <div class="centered-list">
+                    <ul>
+                        <li>Алексеев С.С. Гражданское право в современную эпоху. — М.: Юрайт, 2019. — 480 с.</li>
+                        <li>Гражданское право: В 4 т. / Под ред. Е.А. Суханова. — М.: Волтерс Клувер, 2020. — Т. 1-4.</li>
+                        <li>Нечаева А.М. Семейное право: актуальные проблемы теории и практики. — М.: Юрайт, 2021. — 384 с.</li>
+                        <li>Трудовое право России / Под ред. Ю.П. Орловского, А.Ф. Нуртдиновой. — М.: Контракт, 2022. — 928 с.</li>
+                        <li>Мейер Д.И. Русское гражданское право. — М.: Статут, 2018. — 832 с. (репринт классического труда)</li>
+                        <li>Покровский И.А. Основные проблемы гражданского права. — М.: Статут, 2019. — 354 с.</li>
+                        <li>Антокольская М.В. Семейное право. — М.: Норма, 2020. — 432 с.</li>
+                        <li>Курс трудового права: В 2 т. / Под ред. А.М. Куренного, С.П. Маврина, Е.Б. Хохлова. — М.: Проспект, 2021. — Т. 1-2.</li>
+                        <li>Давид Р., Жоффре-Спинози К. Основные правовые системы современности. — М.: Международные отношения, 2009. — 456 с.</li>
+                        <li>Саидов А.Х. Сравнительное правоведение (основные правовые системы современности). — М.: Юристъ, 2007. — 448 с.</li>
+                        <li>Цвайгерт К., Кётц Х. Введение в сравнительное правоведение в сфере частного права: В 2 т. — М.: Международные отношения, 2000. — Т. 1-2.</li>
+                        <li>Зинковский М.А. Цифровое право: основные понятия и институты. — М.: Юстицинформ, 2021. — 296 с.</li>
+                        <li>Морозов А.С. Правовое регулирование труда в условиях цифровой экономики. — М.: Проспект, 2020. — 208 с.</li>
+                        <li>Гражданское право и цифровые технологии: монография / Отв. ред. Е.А. Суханов, М.А. Рожкова. — М.: Статут, 2020. — 496 с.</li>
+                        <li>Международное частное право: учебник / Под ред. Г.К. Дмитриевой. — М.: Проспект, 2021. — 688 с.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <p>© 2025 Образовательный портал по социальным наукам. Все материалы предназначены для образовательных целей.</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;"><i class="fas fa-info-circle"></i> Для навигации по разделам используйте меню вверху страницы</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.section');
+            
+            function switchSection(targetId) {
+                navLinks.forEach(link => {
+                    if (link.getAttribute('data-target') === targetId) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+                
+                sections.forEach(section => {
+                    if (section.id === targetId) {
+                        section.classList.add('active');
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+            }
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('data-target');
+                    switchSection(targetId);
+                    history.pushState(null, null, `#${targetId}`);
+                });
+            });
+            
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                switchSection(hash);
+            }
+            
+            window.addEventListener('popstate', function() {
+                const hash = window.location.hash.substring(1);
+                if (hash && document.getElementById(hash)) {
+                    switchSection(hash);
+                } else {
+                    switchSection('society');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
